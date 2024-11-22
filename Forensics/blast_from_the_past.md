@@ -19,11 +19,38 @@ Check your modified picture here:
 `nc mimas.picoctf.net 65250`
 
 ## Solution :
-download the image file in your kali linux terminal or ubuntu using this command `wget https://artifacts.picoctf.net/c_mimas/91/original.jpg`
-then rename it `cp original.jpg original_mod.jpg`
 
-check the metadata of your image using `exiftool exiftool original_modi.jpg`
-you can see that the Samsung:TimeStamp is not writeabel so it can be change or modified by exiftool
-so what we do now? 
-you can run the strings command to see all the string in your image `strings original_mod.jpg`
+In this challenge, we are tasked with modifying all the time-related data of a photo to obtain the flag.
 
+The first step is to download the image file to your Kali Linux or Ubuntu terminal using the following command:
+`wget https://artifacts.picoctf.net/c_mimas/91/original.jpg`
+
+Inspect the metadata of the photo by running exiftool command to view all available data `exiftool original.jpg`.
+This will display all the metadata of the photo, but we will focus on the time-related data and ignore the rest.
+
+<img width="440" alt="exif1" src="https://github.com/user-attachments/assets/86e3cdf8-a940-4677-9ccc-5eb4458029f0">
+
+After attempting to modify all the requested metadata, you’ll notice that one piece of data remains unaltered. That data is the `TimeStamp`, which cannot be edited using exiftool.
+
+<img width="459" alt="time" src="https://github.com/user-attachments/assets/4a3ef80e-f7f3-4419-81e6-dd4509d0fc02">
+
+This is where the challenge gets interesting. We have to find a way to change the `TimeStamp` data in the photo.
+So what we do next? run the `strings` command to inspect the contents of the image file. `strings original.jpg`
+
+<img width="185" alt="exif4" src="https://github.com/user-attachments/assets/9196396c-4d00-4faf-960a-ee081bb842d4">
+
+You will quickly notice a suspicious piece of data labeled `Image_UTC_Data1700513181420`. This is a timestamp, but in milliseconds format. When converted using an online converter, it reveals the date 2023:11:20 15:46:21.420–05:00.
+
+Now we know the issue. To solve this, use a hex editing tool called ghex. Install it using the command `sudo apt install ghex`, then launch it and open the image file you want to edit. change the `TimeStamp` value `2023:11:20 15:46:21.420–05:00` to `1970:01:01 00:00:00`.
+
+<img width="540" alt="ghex" src="https://github.com/user-attachments/assets/b7952ced-10ee-45f6-a741-6ad08127fe37">
+
+Once you’ve finished modifying the data, run the appropriate command to verify whether the changes were successful.
+Submit your modified picture `nc -w 2 mimas.picoctf.net 55709 < original_modified.jpg`.
+Check your modified picture `nc mimas.picoctf.net 65250`
+
+
+
+<img width="379" alt="exif5" src="https://github.com/user-attachments/assets/1c8dfc0f-6177-431b-ac57-994aad755564">
+
+And voilà! We’ve successfully solved the challenge and obtained the flag.
