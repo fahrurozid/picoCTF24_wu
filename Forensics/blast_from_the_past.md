@@ -39,7 +39,7 @@ So what we do next? run the `strings` command to inspect the contents of the ima
 
 <img width="185" alt="exif4" src="https://github.com/user-attachments/assets/9196396c-4d00-4faf-960a-ee081bb842d4">
 
-You will quickly notice a suspicious piece of data labeled `Image_UTC_Data1700513181420`. This is a timestamp, but in milliseconds format. When converted using an online converter, it reveals the date 2023:11:20 15:46:21.420–05:00.
+You will quickly notice a suspicious piece of data labeled `Image_UTC_Data1700513181420`. This is a timestamp, but in milliseconds format. When converted using an online converter, it reveals the time date `2023:11:20 15:46:21.420–05:00`.
 
 Now we know the issue. To solve this, use a hex editing tool called ghex. Install it using the command `sudo apt install ghex`, then launch it and open the image file you want to edit. change the `TimeStamp` value `2023:11:20 15:46:21.420–05:00` to `1970:01:01 00:00:00`.
 
