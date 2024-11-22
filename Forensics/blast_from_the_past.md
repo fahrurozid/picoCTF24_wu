@@ -53,4 +53,4 @@ Check your modified picture `nc mimas.picoctf.net 65250`
 
 <img width="379" alt="exif5" src="https://github.com/user-attachments/assets/1c8dfc0f-6177-431b-ac57-994aad755564">
 
-And voilà! We’ve successfully solved the challenge and obtained the flag.
+And yep! We’ve successfully solved the challenge and obtained the flag.
